@@ -11,6 +11,10 @@ dataset = pd.read_csv('./heart_disease_data.csv')
 X = dataset.drop('target',axis=1)
 Y = dataset['target']
 
+# print(f"The percentage of data that have heart disease: {(Y.value_counts()[1]/(165+138))*100}")
+
+# print(f"The percentage of data that doesn't have heart disease: {(Y.value_counts()[0]/(165+138))*100}")
+
 # if we don't set Stratify, all data of the train may crossponds to Y=1 or Y=0
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2, stratify=Y, random_state=2)
 
