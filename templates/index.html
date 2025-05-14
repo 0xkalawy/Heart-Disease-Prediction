@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<form id="predictForm">
+    <h2>Heart Disease Prediction</h2>
+    <input type="number" name="age" placeholder="Age" required>
+    <input type="number" name="sex" placeholder="Sex (0 = Female, 1 = Male)" required>
+    <input type="number" name="cp" placeholder="Chest Pain Type (0-3)" required>
+    <input type="number" name="trestbps" placeholder="Resting BP" required>
+    <input type="number" name="chol" placeholder="Cholesterol" required>
+    <input type="number" name="fbs" placeholder="Fasting Blood Sugar > 120 (1=yes, 0=no)" required>
+    <input type="number" name="restecg" placeholder="Resting ECG (0-2)" required>
+    <input type="number" name="thalach" placeholder="Max Heart Rate" required>
+    <input type="number" name="exang" placeholder="Exercise Induced Angina (1=yes, 0=no)" required>
+    <input type="number" step="any" name="oldpeak" placeholder="ST Depression" required>
+    <input type="number" name="slope" placeholder="Slope (0-2)" required>
+    <input type="number" name="ca" placeholder="Major Vessels Colored (0-3)" required>
+    <input type="number" name="thal" placeholder="Thalassemia (1, 2, 3)" required>
+    <button type="submit">Predict</button>
+    <div id="result"></div>
+</form>
+
+<script>
+    const form = document.getElementById('predictForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(form);
+        const params = new URLSearchParams(formData);
+
+        fetch('/predict?' + params.toString())
+            .then(response => response.text())
+            .then(data => {
+                resultDiv.textContent = data;
+            })
+            .catch(error => {
+                resultDiv.textContent = 'Error: ' + error;
+            });
+    });
+</script>
+
+</body>
+</html>
